@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help us go solar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&family=DM+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --amber-50: #FAEEDA;
+      --amber-100: #FAC775;
+      --amber-400: #EF9F27;
+      --amber-600: #BA7517;
+      --amber-800: #633806;
+      --green-600: #3B6D11;
+      --green-border: #639922;
+      --text-primary: #1a1a18;
+      --text-secondary: #5f5e5a;
+      --text-tertiary: #888780;
+      --bg-primary: #ffffff;
+      --bg-secondary: #f5f4f0;
+      --border: rgba(0,0,0,0.12);
+      --border-secondary: rgba(0,0,0,0.22);
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --font-sans: 'DM Sans', system-ui, sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text-primary: #eeecea;
+        --text-secondary: #b4b2a9;
+        --text-tertiary: #888780;
+        --bg-primary: #1e1e1c;
+        --bg-secondary: #2a2a28;
+        --border: rgba(255,255,255,0.1);
+        --border-secondary: rgba(255,255,255,0.2);
+        --amber-50: #2d2010;
+        --amber-800: #FAC775;
+      }
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 4rem;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 640px;
+      background: var(--bg-primary);
+      border-radius: 16px;
+      border: 0.5px solid var(--border);
+      overflow: hidden;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      text-align: center;
+      border-bottom: 0.5px solid var(--border);
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 60%;
+    }
+
+    .hero-panels {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .hero-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0) 0%,
+        rgba(0,0,0,0.15) 40%,
+        rgba(0,0,0,0.72) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 2rem 2rem;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      line-height: 1.3;
+      color: #fff;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+    }
+
+    .hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      max-width: 420px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.65;
+    }
+
+    .progress-labels { color: rgba(255,255,255,0.8); }
+    .progress-labels strong { color: #fff; }
+    .progress-bar { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.1); }
+    .stats { color: rgba(255,255,255,0.75); }
+    .stats span strong { color: #fff; }
+
+    /* Progress */
+    .progress-wrap { width: 100%; }
+
+    .progress-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .progress-labels strong {
+      font-weight: 500;
+      color: var(--text-primary);
+      font-size: 16px;
+    }
+
+    .progress-bar {
+      height: 10px;
+      background: var(--bg-secondary);
+      border-radius: 99px;
+      overflow: hidden;
+      border: 0.5px solid var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--amber-600);
+      border-radius: 99px;
+      transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .stats {
+      display: flex;
+      justify-content: center;
+      gap: 2.5rem;
+      margin-top: 1rem;
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-align: center;
+    }
+
+    .stats span strong {
+      display: block;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      padding: 1.75rem;
+    }
+
+    @media (max-width: 500px) {
+      .cards { grid-template-columns: 1fr; }
+    }
+
+    .card {
+      background: var(--bg-primary);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+    }
+
+    .card-label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .card-label i { font-size: 15px; }
+
+    .field-row {
+      margin-bottom: 0.75rem;
+    }
+
+    .field-row:last-child { margin-bottom: 0; }
+
+    .field-key {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .field-val {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+    }
+
+    .copy-btn {
+      background: none;
+      border: 0.5px solid var(--border-secondary);
+      border-radius: var(--radius-md);
+      padding: 3px 9px;
+      font-size: 11px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      margin-left: 6px;
+      font-family: var(--font-sans);
+      transition: background 0.15s;
+      vertical-align: middle;
+    }
+
+    .copy-btn:hover { background: var(--bg-secondary); }
+    .copy-btn.copied { color: var(--green-600); border-color: var(--green-border); }
+
+    .divider {
+      border: none;
+      border-top: 0.5px solid var(--border);
+      margin: 1rem 0;
+    }
+
+    /* Amounts */
+    .amounts {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-bottom: 0.85rem;
+    }
+
+    .amt-chip {
+      border: 0.5px solid var(--border-secondary);
+      border-radius: 99px;
+      padding: 5px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-secondary);
+      background: none;
+      font-family: var(--font-sans);
+      transition: all 0.15s;
+    }
+
+    .amt-chip:hover, .amt-chip.active {
+      background: var(--amber-50);
+      border-color: var(--amber-400);
+      color: var(--amber-800);
+    }
+
+    /* PayPal button */
+    .paypal-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 0.7rem 1rem;
+      background: #F5C518;
+      border: none;
+      border-radius: var(--radius-md);
+      font-size: 15px;
+      font-weight: 500;
+      color: #1a1a1a;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+
+    .paypal-btn:hover { opacity: 0.87; }
+
+    .paypal-note {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 0.5rem;
+      text-align: center;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-tertiary);
+      padding: 0 1.75rem 2rem;
+      line-height: 1.7;
+    }
+
+    .footer a {
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="hero">
+    <!-- Sunflower field background -->
+    <img class="hero-img" src="docs/assets/ritae-sunflowers-1622785_1920.jpg" alt="Sunflower field">
+
+    <!-- Solar panel array SVG overlay (~30 panels in 5 rows of 6) -->
+    <svg class="hero-panels" viewBox="0 0 640 380" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <!-- Single panel gradient -->
+        <linearGradient id="panelFace" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#1a3a5c"/>
+          <stop offset="50%" stop-color="#0e2340"/>
+          <stop offset="100%" stop-color="#0a1828"/>
+        </linearGradient>
+        <linearGradient id="panelSheen" x1="0" y1="0" x2="0.4" y2="1">
+          <stop offset="0%" stop-color="#fff" stop-opacity="0.18"/>
+          <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="frameSide" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#888"/>
+          <stop offset="100%" stop-color="#444"/>
+        </linearGradient>
+        <!-- Shadow under array -->
+        <filter id="shadow" x="-5%" y="-5%" width="110%" height="120%">
+          <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.45"/>
+        </filter>
+      </defs>
+
+      <!-- Ground shadow strip -->
+      <ellipse cx="320" cy="248" rx="290" ry="18" fill="rgba(0,0,0,0.22)"/>
+
+      <!-- Panel macro: 6 columns x 5 rows, perspective tilt -->
+      <!-- Row 1 (back, smallest) -->
+      <g transform="translate(58,108) skewX(-4)" filter="url(#shadow)">
+        <g id="r1">
+          <!-- col 1-6 -->
+          <g transform="translate(0,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(86,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(172,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(258,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(344,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(430,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+        </g>
+        <!-- Row 2 -->
+        <g transform="translate(0,50)">
+          <g transform="translate(0,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(86,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(172,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(258,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(344,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(430,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+        </g>
+        <!-- Row 3 -->
+        <g transform="translate(0,100)">
+          <g transform="translate(0,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(86,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(172,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(258,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(344,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(430,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+        </g>
+        <!-- Row 4 -->
+        <g transform="translate(0,150)">
+          <g transform="translate(0,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(86,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(172,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(258,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(344,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(430,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+        </g>
+        <!-- Row 5 -->
+        <g transform="translate(0,200)">
+          <g transform="translate(0,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(86,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(172,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(258,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(344,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+          <g transform="translate(430,0)"><rect width="80" height="44" rx="2" fill="url(#panelFace)"/><rect width="80" height="44" rx="2" fill="url(#panelSheen)"/><line x1="26" y1="0" x2="26" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="53" y1="0" x2="53" y2="44" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="14" x2="80" y2="14" stroke="#0a1828" stroke-width="1"/><line x1="0" y1="29" x2="80" y2="29" stroke="#0a1828" stroke-width="1"/><rect x="0" y="0" width="80" height="44" rx="2" fill="none" stroke="#556" stroke-width="1.5"/></g>
+        </g>
+      </g>
+    </svg>
+
+    <!-- Dark gradient overlay -->
+    <div class="hero-gradient"></div>
+
+    <!-- Text content sits on top -->
+    <div class="hero-content">
+      <h1>Help us go solar</h1>
+      <p>We're raising funds to install solar panels and cut our energy bills for good. Every contribution — big or small — gets us closer to a greener future.</p>
+
+      <div class="progress-wrap">
+        <div class="progress-labels">
+          <span><strong id="raised-amt">£3,400</strong> raised</span>
+          <span>goal: £10,000</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        <div class="stats">
+          <span><strong>34%</strong>of goal</span>
+          <span><strong>47</strong>contributors</span>
+          <span><strong>£6,600</strong>to go</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cards">
+
+    <div class="card">
+      <div class="card-label"><i class="ti ti-building-bank" aria-hidden="true"></i> Bank transfer</div>
+
+      <div class="field-row">
+        <span class="field-key">Account name</span>
+        <span class="field-val">Solar Fund <button class="copy-btn" onclick="copyField(this, 'Solar Fund')">copy</button></span>
+      </div>
+      <div class="field-row">
+        <span class="field-key">Sort code</span>
+        <span class="field-val">00-00-00 <button class="copy-btn" onclick="copyField(this, '00-00-00')">copy</button></span>
+      </div>
+      <div class="field-row">
+        <span class="field-key">Account number</span>
+        <span class="field-val">00000000 <button class="copy-btn" onclick="copyField(this, '00000000')">copy</button></span>
+      </div>
+      <hr class="divider">
+      <div class="field-row">
+        <span class="field-key">Reference</span>
+        <span class="field-val" style="font-size: 13px; font-family: var(--font-sans);">SOLAR + your name</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label"><i class="ti ti-credit-card" aria-hidden="true"></i> Pay by card</div>
+      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 0.85rem; line-height: 1.55;">Choose an amount and pay securely online — no account needed.</p>
+
+      <div class="amounts">
+        <button class="amt-chip" onclick="selectAmt(this, '5')">£5</button>
+        <button class="amt-chip active" onclick="selectAmt(this, '10')">£10</button>
+        <button class="amt-chip" onclick="selectAmt(this, '25')">£25</button>
+        <button class="amt-chip" onclick="selectAmt(this, '50')">£50</button>
+      </div>
+
+      <!-- ✏️ Replace href below with your PayPal.Me or donation link -->
+      <a class="paypal-btn" id="paypal-link" href="https://www.paypal.com/donate" target="_blank" rel="noopener">
+        <i class="ti ti-brand-paypal" aria-hidden="true"></i>
+        <span id="paypal-label">Donate £10 via PayPal</span>
+      </a>
+      <p class="paypal-note">Replace the PayPal link with your own donation URL</p>
+    </div>
+
+  </div>
+
+  <!-- ✏️ Replace the email address below -->
+  <p class="footer">
+    Questions? Email <a href="mailto:your@email.com">your@email.com</a><br>
+    All funds go directly toward the solar panel installation.
+  </p>
+
+</div>
+
+<script>
+  // Animate progress bar on load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('progress-fill').style.width = '34%';
+    }, 300);
+  });
+
+  function copyField(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  function selectAmt(chip, amt) {
+    document.querySelectorAll('.amt-chip').forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    document.getElementById('paypal-label').textContent = 'Donate £' + amt + ' via PayPal';
+  }
+</script>
+
+</body>
+</html>
